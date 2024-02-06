@@ -20,8 +20,7 @@
     <div id="defaultTabContent">
         <div class=" p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800 w-full mx-auto" id="about"  aria-labelledby="about-tab">
             @include('card')
-            @include('card')
-            @include('card')
+
         </div>
         <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="services" role="tabpanel" aria-labelledby="services-tab">
             <h2 class="mb-5 text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white">We invest in the world’s potential</h2>
