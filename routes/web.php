@@ -17,4 +17,14 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('/',[BookController::class, 'index']);
+
+Route::get('/', [BookController::class, 'index'])->name('latest');
+
+Route::get('/last/popular/month', [BookController::class, 'filterMonth'])->name('month');
+
+Route::get('/popular/six/months', [BookController::class, 'filterPopularSixMonths'])->name('popular-six-months');
+
+Route::get('/rated/month', [BookController::class, 'filterRatedMonth'])->name('rated-month');
+
+Route::get('/rated/six/months', [BookController::class, 'filterRatedSixMonths'])->name('rated-six-month');
+

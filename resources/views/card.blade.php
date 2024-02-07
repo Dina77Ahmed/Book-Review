@@ -6,9 +6,9 @@
             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $book->title }}{{ $book->id }}</h5>
             <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ $book->description }}</p>
             @include('raing')
-            <p class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">4.95</p>
             <p class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">out of</p>
-            <p class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">5</p>
+            <p class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-200">{{ $book->reviews_count }}</p>
+            <p class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-200">reviews</p>
         </div>
            <div class="mb-3 mt-3 font-normal text-gray-700 dark:text-gray-400">By: {{ $book->author }}</div>
         </div>
