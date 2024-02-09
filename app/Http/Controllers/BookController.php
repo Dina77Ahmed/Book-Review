@@ -11,29 +11,39 @@ class BookController extends Controller
 {
     public function index()
     {
-        $books = Book::orderBy('created_at', 'desc')->get();
-        $booksRating = $this->calculateAverageRating($books);
+        $books = Book::orderBy('created_at', 'desc');
+        
+        if(request()->has('search')){
+            $books=$books->where('title','like','%'.request('search').'%');
+        }
 
+        $books = $books->get();
+        $booksRating = $this->calculateAverageRating($books);
+        // dd($booksRating);
         return view('index', compact('books', 'booksRating'));
     }
 
     public function filterMonth()
     {
         $lastMonth = Carbon::now()->subMonth();
-        $popularBooks = $this->getPopularBooks($lastMonth);
+        $endOfMonth = Carbon::now()->endOfMonth();
+        $popularBooks = $this->getPopularBooks($lastMonth, $endOfMonth);
+
 
         $books=$popularBooks;
         $booksRating = $this->calculateAverageRating($books);
-        
+        // dd($booksRating);
         return view('index', compact('books', 'booksRating'));
     }
 
     public function filterPopularSixMonths()
     {
         $sixMonthsAgo = Carbon::now()->subMonths(6);
-        $popularBooks = $this->getPopularBooks($sixMonthsAgo);
+        $endOfSixMonths = Carbon::now()->endOfMonth();
+        $popularSixBooks = $this->getPopularBooks($sixMonthsAgo, $endOfSixMonths);
 
-        $books=$popularBooks;
+
+        $books=$popularSixBooks;
         $booksRating = $this->calculateAverageRating($books);
 
         return view('index', compact('books', 'booksRating'));
@@ -61,23 +71,37 @@ class BookController extends Controller
         return view('index', compact('books', 'booksRating'));
     }
 
+    public function show(Book $book){
+
+        $book->averageRating=round($book->reviews->avg('rating'));
+        
+        return view('show',compact('book'));
+    }
+
+
     protected function calculateAverageRating($books)
     {
         return $books->map(function ($book) {
-            $book->averageRating = $book->reviews_count > 0 ? $book->reviews->avg('rating') : 0;
+            $book->averageRating = $book->reviews()->count() > 0 ? round($book->reviews->avg('rating')) : 0;
             return $book;
         });
     }
 
-    protected function getPopularBooks($date)
+    
+    protected function getPopularBooks($startDate, $endDate)
     {
-        return Book::withCount('reviews')
-            ->whereHas('reviews', function ($query) use ($date) {
-                $query->where('created_at', '>=', $date);
+        return Book::withCount(['reviews' => function ($query) use ($startDate, $endDate) {
+                $query->whereBetween('created_at', [$startDate, $endDate]);
+            }])
+            ->whereHas('reviews', function ($query) use ($startDate, $endDate) {
+                $query->whereBetween('created_at', [$startDate, $endDate]);
             })
             ->orderBy('reviews_count', 'desc')
             ->get();
     }
+    
+    
+
 
     protected function getMostRatedBooks($date)
     {
@@ -90,7 +114,7 @@ class BookController extends Controller
             }])
             ->get()
             ->sortByDesc(function ($book) {
-                return $book->reviews->avg('rating');
+                return round($book->reviews->avg('rating'));
             });
     }
 }

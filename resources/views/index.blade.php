@@ -4,7 +4,6 @@ Book Reviews
 
 @include('layoute.head')
 
-
     <div class="w-3/4 mx-auto pb-10">
         @include('search')
         @include('navbar')

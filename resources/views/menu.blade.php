@@ -3,7 +3,7 @@ id="defaultTab" data-tabs-toggle="#defaultTabContent" role="tablist">
 <li class="me-2">
     <a href="{{ route('latest') }}" id="about-tab" data-tabs-target="#about" type="button" role="tab"
         aria-controls="about" aria-selected="true"
-        class="inline-block p-4  rounded-ss-lg hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 {{ Route::is('latest') ? 'dark:text-blue-500 ' : '' }}">Latest</a>
+        class="inline-block p-4  rounded-ss-lg hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 {{ Route::is('latest') ? 'dark:text-blue-500 ' : '' }}">Add recently</a>
 </li>
 <li class="me-2">
     <a href="{{ route('month') }}" id="about-tab" data-tabs-target="#about" type="button" role="tab"

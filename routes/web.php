@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,3 +29,10 @@ Route::get('/rated/month', [BookController::class, 'filterRatedMonth'])->name('r
 
 Route::get('/rated/six/months', [BookController::class, 'filterRatedSixMonths'])->name('rated-six-month');
 
+Route::get('books/show/{book}',[BookController::class,'show'])->name('book.show');
+
+// Reviews Route
+
+Route::get('reviews/create/{book}',[ReviewController::class,'create'])->name('review.create');
+
+Route::post('/books/{book}/reviews',[ReviewController::class,'store'])->name('review.store');
