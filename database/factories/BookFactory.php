@@ -9,27 +9,29 @@ use Carbon\Carbon;
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Book>
  */
 class BookFactory extends Factory
-{
+{           
+    
     /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
+    private $counter=16;
     public function definition(): array
     {
         $sixMonthsAgo = Carbon::now()->subMonths(6);
         $createdAt = $this->faker->dateTimeBetween($sixMonthsAgo);
 
+        $image=$this->counter++ . '.jpg';
         // $lastMonth = Carbon::now()->subMonth();
         // $createdAt = $this->faker->dateTimeBetween($lastMonth);
-
-        // $lastWeek = Carbon::now()->subWeek();
-        // $createdAt = $this->faker->dateTimeBetween($lastWeek);
+        
 
         return [
             'title'=>$this->faker->unique()->realText($maxChars=100),
             'description'=>$this->faker->unique()->realText($maxChars=200),
             'author' => fake()->name(),
+            'image'=>$image,
             'created_at' => $createdAt,
             'updated_at' => $createdAt, 
         ];

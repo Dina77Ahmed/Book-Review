@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Book;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -19,20 +20,19 @@ class ReviewFactory extends Factory
     {
 
         $sixMonthsAgo = Carbon::now()->subMonths(6);
-        $createdAt = $this->faker->dateTimeBetween($sixMonthsAgo);
+        $endDate = Carbon::now();
+        
 
         // $lastMonth = Carbon::now()->subMonth();
         // $createdAt = $this->faker->dateTimeBetween($lastMonth);
 
-        // $lastWeek = Carbon::now()->subWeek();
-        // $createdAt = $this->faker->dateTimeBetween($lastWeek);
 
         return [
             'content'=>$this->faker->unique()->realText($maxChars=200),
-            'book_id'=>$this->faker->numberBetween(1,35),
+            'book_id'=>Book::factory(),
             'rating'=>$this->faker->numberBetween(1,5),
-            'created_at' => $createdAt,
-            'updated_at' => $createdAt, 
+            'created_at' => $this->faker->dateTimeBetween($sixMonthsAgo,$endDate),
+            'updated_at' => $this->faker->dateTimeBetween($sixMonthsAgo,$endDate), 
         ];
     }
 }

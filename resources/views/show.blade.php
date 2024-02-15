@@ -7,7 +7,7 @@
 
 <div class="flex justify-between">
     <div class="pt-10 m-2">
-        <a href="{{ route('latest') }}"
+        <a href="{{ route('filter') }}"
             class="text-blue-500 italic hover:text-blue-400 hover:border-b-2 border-blue-400 pb-3 transition-all py-20">
             < Back to previous page </a>
     </div>

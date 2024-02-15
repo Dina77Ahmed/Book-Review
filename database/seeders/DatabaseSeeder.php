@@ -22,7 +22,31 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        // Book::factory(5)->create();
+        // Book::factory()
+        // ->count(1)
+        // ->hasReviews(7)
+        // ->create();
+
+        // Book::factory()
+        // ->count(8)
+        // ->hasReviews(4)
+        // ->create();
+
+        // Book::factory()
+        // ->count(3)
+        // ->hasReviews(2)
+        // ->create();
+
+        // Book::factory()
+        // ->count(3)
+        // ->hasReviews(1)
+        // ->create();
+
+        // Book::factory()
+        // ->count(5)
+        // ->hasReviews(0)
+        // ->create();
+
         // Review::factory(5)->create();
     }
 }

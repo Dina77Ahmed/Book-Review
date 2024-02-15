@@ -1,4 +1,4 @@
-<form action="{{ route('latest') }}" method="GET"  class="flex items-center">
+<form action="{{ route('filter') }}" method="GET"  class="flex items-center">
     @csrf
     <label for="voice-search" class="sr-only">Search</label>
     <div class="relative w-full">
