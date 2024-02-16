@@ -47,6 +47,11 @@ class DatabaseSeeder extends Seeder
         // ->hasReviews(0)
         // ->create();
 
+        // Book::factory()
+        // ->count(5)
+        // ->hasReviews(1)
+        // ->create();
+
         // Review::factory(5)->create();
     }
 }

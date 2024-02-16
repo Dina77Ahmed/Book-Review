@@ -16,7 +16,7 @@ class BookFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    private $counter=16;
+    private $counter=30;
     public function definition(): array
     {
         $sixMonthsAgo = Carbon::now()->subMonths(6);
@@ -28,8 +28,8 @@ class BookFactory extends Factory
         
 
         return [
-            'title'=>$this->faker->unique()->realText($maxChars=100),
-            'description'=>$this->faker->unique()->realText($maxChars=200),
+            'title'=>$this->faker->unique()->realText($maxChars=20),
+            'description'=>$this->faker->unique()->realText($maxChars=70),
             'author' => fake()->name(),
             'image'=>$image,
             'created_at' => $createdAt,

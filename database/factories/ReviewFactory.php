@@ -19,20 +19,21 @@ class ReviewFactory extends Factory
     public function definition(): array
     {
 
-        $sixMonthsAgo = Carbon::now()->subMonths(6);
+        // $sixMonthsAgo = Carbon::now()->subMonths(6);
+        // $endDate = Carbon::now();
+        
+
+        $lastMonth = Carbon::now()->subMonth();
         $endDate = Carbon::now();
         
 
-        // $lastMonth = Carbon::now()->subMonth();
-        // $createdAt = $this->faker->dateTimeBetween($lastMonth);
-
 
         return [
-            'content'=>$this->faker->unique()->realText($maxChars=200),
+            'content'=>$this->faker->unique()->realText($maxChars=100),
             'book_id'=>Book::factory(),
             'rating'=>$this->faker->numberBetween(1,5),
-            'created_at' => $this->faker->dateTimeBetween($sixMonthsAgo,$endDate),
-            'updated_at' => $this->faker->dateTimeBetween($sixMonthsAgo,$endDate), 
+            'created_at' => $this->faker->dateTimeBetween($lastMonth,$endDate),
+            'updated_at' => $this->faker->dateTimeBetween($lastMonth,$endDate), 
         ];
     }
 }

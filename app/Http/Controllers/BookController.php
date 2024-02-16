@@ -17,10 +17,6 @@ class BookController extends Controller
         $books=Book::query();
         $data_filter=request()->data_filter;
 
-        if(request()->has('search')){
-            $books=$books->where('title','like','%'.request('search').'%');
-        }
-
         switch($data_filter){
             case'latest':
                 $books->orderBy('created_at', 'desc');
@@ -42,16 +38,21 @@ class BookController extends Controller
                 $lastMonth = Carbon::now()->subMonth();
                 $books = $this->getMostRatedBooks($lastMonth);
                 break;
+
             case'rated-six-month':
                 $lastSixMonth = Carbon::now()->subMonth(6);
                 $books = $this->getMostRatedBooks($lastSixMonth);
                 break;
 
         }
-
+        // dd($books);
+        if(request()->has('search')){
+            $searchItem=request('search');
+            $books->where('title','like','%'. $searchItem .'%');
+        }
         $books = $books->get();
         $booksRating = $this->calculateAverageRating($books);
-        // dd($booksRating);
+        
         return view('index', compact('books', 'booksRating','data_filter'));
 
     }
@@ -68,7 +69,7 @@ class BookController extends Controller
 
     protected function calculateAverageRating($books)
     {
-        $books = collect($books);
+        // $books = collect($books);
         return $books->map(function ($book) {
             $book->averageRating = $book->reviews()->count() > 0 ? round($book->reviews->avg('rating')) : 0;
             return $book;
@@ -85,24 +86,17 @@ class BookController extends Controller
            
     }
     
-    
-
-
     protected function getMostRatedBooks($date)
     {
         return Book::withCount('reviews')
+            ->withAvg('reviews', 'rating')
             ->whereHas('reviews', function ($query) use ($date) {
                 $query->where('created_at', '>=', $date);
             })
-            ->with(['reviews' => function ($query) use ($date) {
-                $query->where('created_at', '>=', $date);
-            }])
-
-            ->sortByDesc(function ($book) {
-                return round($book->reviews->avg('rating'));
-            });
+            ->orderByDesc('reviews_avg_rating');
+       
     }
+    
 }
-
 
 
