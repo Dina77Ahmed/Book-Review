@@ -81,6 +81,7 @@ class BookController extends Controller
         return Book::withCount(['reviews' => function ($query) use ($startDate, $endDate) {
                 $query->whereBetween('created_at', [$startDate, $endDate]);
             }])
+            ->with('reviews')
             ->orderBy('reviews_count', 'desc');
            
     }
@@ -92,6 +93,7 @@ class BookController extends Controller
             ->whereHas('reviews', function ($query) use ($date) {
                 $query->where('created_at', '>=', $date);
             })
+            ->with('reviews')
             ->orderByDesc('reviews_avg_rating');
        
     }
