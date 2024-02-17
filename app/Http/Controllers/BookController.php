@@ -14,7 +14,7 @@ class BookController extends Controller
 
     public function index()
     {
-        $books=Book::query();
+        $books=Book::with('reviews');
         $data_filter=request()->data_filter;
 
         switch($data_filter){
@@ -60,7 +60,6 @@ class BookController extends Controller
 
 
     public function show(Book $book){
-
         $book->averageRating=round($book->reviews->avg('rating'));
         
         return view('show',compact('book'));
@@ -71,7 +70,7 @@ class BookController extends Controller
     {
         // $books = collect($books);
         return $books->map(function ($book) {
-            $book->averageRating = $book->reviews()->count() > 0 ? round($book->reviews->avg('rating')) : 0;
+            $book->averageRating = $book->reviews->count() > 0 ? round($book->reviews->avg('rating')) : 0;
             return $book;
         });
     }
